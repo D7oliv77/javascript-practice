@@ -4,31 +4,42 @@
     <meta charset="utf-8" />
     <title>Example</title>
   </head>
-  
+
   <body>
     <input type="text" id="numbera" value="" />
     <input type="text" id="numberb" value="" />
     <button type="button" id="sum-btn" name="button">Sum</button>
     <button type="button" id="subtract-btn" name="button1">Subtract</button>
     <script type="text/javascript">
-      const button = documents.getElementById("sum-btn");
+      const button = document.getElementById("sum-btn");
       button.addEventListener("click", () => {
-        alert(`the sum is ${sum(...getInputValues())}`);
-      });
-      const button1 = document.getElementById("subtract-btn");
-      button1.addEventListener("click", () => {
-        const a = document.getElementById("numbera").value;
-        const b = document.getElementById("numberb").value;
-        if (a && b) {
-        alert(`the sum is ${sum(...getInputValues())}`);
+        const result = validateInput(...getInputValues());
+        if (result) {
+          alert(`the sum is ${sum(...result)}`);
         }
       });
-       
-        const getInputValues = function () {
+
+      const button1 = document.getElementById("subtract-btn");
+      button1.addEventListener("click", () => {
+        const result = validateInput(...getInputValues());
+        if (result) {
+          alert(`the subtract is ${subtract(...result)}`);
+        }
+      });
+
+      const getInputValues = function () {
         const a = document.getElementById("numbera").value;
         const b = document.getElementById("numberb").value;
 
         return [a, b];
+      };
+
+      const validateInput = function (a, b) {
+        if (isNaN(a) || isNaN(b)) {
+          alert("The input values need to be numbers");
+        } else {
+          return [parseInt(a), parseInt(b)];
+        }
       };
 
       const sum = function (a, b) {
